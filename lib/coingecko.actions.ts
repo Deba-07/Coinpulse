@@ -10,7 +10,7 @@ if (!API_KEY) throw new Error("Could not get api key");
 
 export async function fetcher<T>(
   endpoint: string,
-  params: QueryParams,
+  params?: QueryParams,
   revalidate = 60,
 ): Promise<T> {
   const url = qs.stringifyUrl(
@@ -22,10 +22,10 @@ export async function fetcher<T>(
   );
 
   const response = await fetch(url, {
-    headers: {
-      "x-cg-pro-api-key": API_KEY,
-      "Content-type": "application/json",
-    } as Record<string, string>,
+    // headers: {
+    //   "x-cg-pro-api-key": API_KEY,
+    //   "Content-type": "application/json",
+    // } as Record<string, string>,
     next: { revalidate },
   });
 
