@@ -9,9 +9,7 @@ import {
   TableRow,
 } from "./ui/table";
 
-import React from "react";
-
-export const DataTable = <T,>({
+const DataTable = <T,>({
   columns,
   data,
   rowKey,
@@ -25,12 +23,14 @@ export const DataTable = <T,>({
   return (
     <Table className={cn("custom-scrollbar", tableClassName)}>
       <TableHeader className={headerClassName}>
-        <TableRow className={cn("hover: bg-transparent!", headerRowClassName)}>
+        <TableRow className={cn("hover:bg-transparent!", headerRowClassName)}>
           {columns.map((column, i) => (
             <TableHead
               key={i}
               className={cn(
                 "bg-dark-400 text-purple-100 py-4 first:pl-5 last:pr-5",
+                headerCellClassName,
+                column.headClassName,
               )}
             >
               {column.header}
@@ -50,7 +50,11 @@ export const DataTable = <T,>({
             {columns.map((column, columnIndex) => (
               <TableCell
                 key={columnIndex}
-                className={cn("py-4 first:pl-5 last:pr-5")}
+                className={cn(
+                  "py-4 first:pl-5 last:pr-5",
+                  bodyCellClassName,
+                  column.cellClassName,
+                )}
               >
                 {column.cell(row, rowIndex)}
               </TableCell>
@@ -61,3 +65,5 @@ export const DataTable = <T,>({
     </Table>
   );
 };
+
+export default DataTable;
