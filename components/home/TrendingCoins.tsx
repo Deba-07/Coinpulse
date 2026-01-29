@@ -1,23 +1,23 @@
 import { fetcher } from "@/lib/coingecko.actions";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency, formatPercentage } from "@/lib/utils";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import { DataTable } from "../DataTable";
+import DataTable from "../DataTable";
 import { TrendingCoinsFallback } from "./Fallback";
 
 const TrendingCoins = async () => {
   let trendingCoins;
+
   try {
     trendingCoins = await fetcher<{ coins: TrendingCoin[] }>(
-      "search/trending",
+      "/search/trending",
       undefined,
       300,
     );
   } catch (error) {
     console.error("Error fetching trending coins:", error);
-    return <TrendingCoinsFallback />
+    return <TrendingCoinsFallback />;
   }
 
   const columns: DataTableColumn<TrendingCoin>[] = [
@@ -36,8 +36,8 @@ const TrendingCoins = async () => {
       },
     },
     {
-      header: "24 Change",
-      cellClassName: "name-cell",
+      header: "24h Change",
+      cellClassName: "change-cell",
       cell: (coin) => {
         const item = coin.item;
         const isTrendingUp = item.data.price_change_percentage_24h.usd > 0;
@@ -45,17 +45,17 @@ const TrendingCoins = async () => {
         return (
           <div
             className={cn(
-              "price-chnage",
+              "price-change",
               isTrendingUp ? "text-green-500" : "text-red-500",
             )}
           >
-            <p>
+            <p className="flex items-center">
+              {formatPercentage(item.data.price_change_percentage_24h.usd)}
               {isTrendingUp ? (
                 <TrendingUp width={16} height={16} />
               ) : (
                 <TrendingDown width={16} height={16} />
               )}
-              {Math.abs(item.data.price_change_percentage_24h.usd).toFixed(2)}%
             </p>
           </div>
         );
@@ -64,13 +64,14 @@ const TrendingCoins = async () => {
     {
       header: "Price",
       cellClassName: "price-cell",
-      cell: (coin) => coin.item.data.price,
+      cell: (coin) => formatCurrency(coin.item.data.price),
     },
   ];
 
   return (
     <div id="trending-coins">
       <h4>Trending Coins</h4>
+
       <DataTable
         data={trendingCoins.coins.slice(0, 6) || []}
         columns={columns}
