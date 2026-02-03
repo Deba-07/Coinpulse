@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CoinPulse
+
+> Crypto screener app with a built-in high frequency terminal and dashboard
+
+**Live URL:** [https://coinpulse.vercel.app](https://coinpulse.vercel.app)
+
+---
+
+## Overview
+
+CoinPulse is a modern cryptocurrency screener and dashboard built with Next.js 16, React 19, and Tailwind CSS 4. It provides real-time market data, interactive candlestick charts, trending coins, category analytics, and a high-frequency terminal for live price updates. Data is sourced from CoinGecko and Binance APIs.
+
+---
+
+## Features
+
+- **Live Crypto Prices:** Real-time price updates and OHLCV charts for top coins
+- **Trending Coins:** See what's trending in the market
+- **Categories Analytics:** Top categories with gainers, market cap, and volume
+- **All Coins Table:** Paginated, sortable table of all coins with key stats
+- **Coin Details:** Dedicated pages for each coin with price, chart, and stats
+- **Converter:** Convert between coins and fiat instantly
+- **Responsive UI:** Mobile-first, dark mode, and beautiful design
+- **High Frequency Terminal:** Live price and trade updates via WebSocket
+
+---
+
+## Tech Stack
+
+- [Next.js 16 (App Router)](https://nextjs.org/)
+- [React 19](https://react.dev/)
+- [Tailwind CSS 4](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [lightweight-charts](https://tradingview.github.io/lightweight-charts/)
+- [CoinGecko API](https://www.coingecko.com/en/api)
+- [Binance WebSocket API](https://binance-docs.github.io/apidocs/spot/en/#websocket-market-streams)
+
+---
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies:**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   # or
+   bun install
+   ```
+
+2. **Run the development server:**
+
+   ```bash
+   npm run dev
+   # or yarn dev / pnpm dev / bun dev
+   ```
+
+3. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## Scripts
+
+- `dev` – Start the development server
+- `build` – Build for production
+- `start` – Start the production server
+- `lint` – Run ESLint
+
+---
+
+## Folder Structure
+
+```
+├── app/                # Next.js app directory (routing, pages, layouts)
+│   ├── api/            # API routes (CoinGecko proxy)
+│   ├── globals.css     # Global styles (Tailwind)
+│   ├── layout.tsx      # Root layout
+│   └── page.tsx        # Home page
+├── components/         # UI and feature components
+│   ├── home/           # Home page sections (Trending, Categories, etc.)
+│   ├── ui/             # Reusable UI primitives (Button, Table, etc.)
+│   └── ...             # Feature components (Charts, Header, etc.)
+├── hooks/              # Custom React hooks (WebSocket, polling)
+├── lib/                # Utility functions and API logic
+├── public/             # Static assets (logo, images)
+├── constants.ts        # App-wide constants
+├── type.d.ts           # TypeScript types
+├── package.json        # Project metadata and scripts
+└── ...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Main Components & Hooks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `CandleStickChart` – Interactive candlestick chart for price history
+- `CoinHeader` – Coin info and stats header
+- `CoinsPagination` – Paginated navigation for coins
+- `Converter` – Crypto/fiat converter
+- `DataTable` – Generic table component
+- `Header` – App navigation bar
+- `LiveDataWrapper` – Real-time data wrapper for live updates
+- `useBinanceWebSocket` – Custom hook for Binance live data
+- `useCoinGeckoPolling` – Custom hook for polling CoinGecko
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## API & Data
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **CoinGecko API**: Used for fetching coins, trending, categories, and OHLC data
+- **Binance WebSocket**: Used for high-frequency live price and trade updates
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Styling
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Tailwind CSS 4**: Utility-first CSS framework
+- **Custom themes**: Dark mode, custom color palette, and responsive design
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Contributing
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/your-feature`)
+3. Commit your changes
+4. Push to your fork and open a Pull Request
+
+---
+
+## License
+
+MIT
