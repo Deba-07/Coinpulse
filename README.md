@@ -2,7 +2,7 @@
 
 > Crypto screener app with a built-in high frequency terminal and dashboard
 
-**Live URL:** [https://coinpulse.vercel.app](https://coinpulse.vercel.app)
+**Live URL:** https://coinpulse-sand.vercel.app/
 
 ---
 
