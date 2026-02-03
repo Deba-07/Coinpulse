@@ -1,7 +1,8 @@
 import Converter from "@/components/Converter";
 import LiveDataWrapper from "@/components/LiveDataWrapper";
+import TopMoversList from "@/components/TopMovers";
 import { toBinanceSymbol } from "@/lib/binance";
-import { fetcher } from "@/lib/coingecko.actions";
+import { fetcher, getTopMovers } from "@/lib/coingecko.actions";
 import { formatCurrency } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
@@ -10,7 +11,7 @@ const page = async ({ params }: NextPageProps) => {
   const { id } = await params;
 
   // Fetch Coin Details + OHLC Chart Data
-  const [coinData, coinOHLCData] = await Promise.all([
+  const [coinData, coinOHLCData, movers] = await Promise.all([
     fetcher<CoinDetailsData>(`/coins/${id}`),
 
     fetcher<OHLCData[]>(`/coins/${id}/ohlc`, {
@@ -18,6 +19,8 @@ const page = async ({ params }: NextPageProps) => {
       days: 1,
       precision: "full",
     }),
+
+    getTopMovers(),
   ]);
 
   // Binance Symbol (Dynamic)
@@ -102,7 +105,11 @@ const page = async ({ params }: NextPageProps) => {
           </ul>
         </div>
 
-        <p>Top gainers and losers</p>
+        <div className="mt-6 space-y-6">
+          <TopMoversList title="Top Gainers (24h)" coins={movers.gainers} />
+
+          <TopMoversList title="Top Losers (24h)" coins={movers.losers} />
+        </div>
       </section>
     </main>
   );
